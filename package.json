@@ -1,0 +1,20 @@
+{
+  "name": "todocli",
+  "version": "1.0.0",
+  "description": "A Todo List Application that you can interact with using your command line",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Todo",
+    "cli",
+    "node.js"
+  ],
+  "author": "David Ekete",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.2.3",
+    "typescript": "^5.0.4"
+  }
+}
