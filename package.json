@@ -4,7 +4,8 @@
   "description": "A Todo List Application that you can interact with using your command line",
   "main": "index.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node .",
+    "build": "tsc"
   },
   "keywords": [
     "Todo",
@@ -16,5 +17,10 @@
   "devDependencies": {
     "@types/node": "^20.2.3",
     "typescript": "^5.0.4"
+  },
+  "dependencies": {
+    "chalk": "^5.2.0",
+    "commander": "^10.0.1",
+    "inquirer": "^9.2.6"
   }
 }
