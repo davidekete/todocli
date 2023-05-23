@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "description": "A Todo List Application that you can interact with using your command line",
   "main": "index.ts",
+  "type": "module",
   "scripts": {
-    "start": "node .",
+    "start": "node ./build/index.js",
     "build": "npx tsc"
   },
   "keywords": [
@@ -12,6 +13,9 @@
     "cli",
     "node.js"
   ],
+  "bin": {
+    "todocli": "./build/index.js"
+  },
   "author": "David Ekete",
   "license": "MIT",
   "devDependencies": {
