@@ -64,19 +64,18 @@ const saveTasks = function (taskData: taskType) {
       const existingData = fs.readFileSync("tasklist.json", "utf-8");
 
       //Parse data
-      const data: any = JSON.parse(existingData);
-      //Update parsed data
-      data.push(taskData);
+      const data: taskInterface = JSON.parse(existingData);
 
-      //Save parsed data
-      tasksJSON.tasks.push(data);
+      //Update tasks data
+      data.tasks.push(taskData);
 
       //Stringify updated task data
-      const jsonData = JSON.stringify(tasksJSON);
+      const jsonData = JSON.stringify(data);
 
       fs.writeFileSync("tasklist.json", jsonData, "utf8");
     } else {
       tasksJSON.tasks.push(taskData);
+
       const jsonData = JSON.stringify(tasksJSON);
 
       fs.writeFileSync("tasklist.json", jsonData, "utf8");
@@ -87,43 +86,30 @@ const saveTasks = function (taskData: taskType) {
 };
 
 const addTodo = async function () {
-  console.clear();
-  const { taskName, dueDate } = await getTodoArgs();
+  try {
+    console.clear();
+    const { taskName, dueDate } = await getTodoArgs();
 
-  const spinner = initializeSpinner();
+    const spinner = initializeSpinner();
 
-  const task = {
-    taskName,
-    dueDate,
-    done: false,
-    isDue: taskDue(this.dueDate),
-  };
+    const task = {
+      taskName,
+      dueDate,
+      done: false,
+      isDue: taskDue(this.dueDate),
+    };
 
-  saveTasks(task);
-  spinner.stop();
-  console.clear();
-  console.log(
-    `New task: ${chalk.blue(
-      taskName
-    )} added to TodoList. Your task is due on ${chalk.red(dueDate)}`
-  );
-
-  // const taskData = JSON.stringify(task);
-
-  // fs.writeFile("tasklist.json", taskData, "utf-8", (error) => {
-  //   if (error) {
-  //     console.log(`Writefile Error ${error}`);
-  //     return;
-  //   }
-
-  //   spinner.stop();
-  //   console.clear();
-  //   console.log(
-  //     `New task: ${chalk.blue(
-  //       taskName
-  //     )} added to TodoList. Your task is due on ${chalk.red(dueDate)}`
-  //   );
-  // });
+    saveTasks(task);
+    spinner.stop();
+    console.clear();
+    console.log(
+      `New task: ${chalk.blue(
+        taskName
+      )} added to TodoList. Your task is due on ${chalk.red(dueDate)}`
+    );
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 export default addTodo;
