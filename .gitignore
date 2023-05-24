@@ -3,3 +3,4 @@ build
 tasklist.json
 dts
 test
+.vscode

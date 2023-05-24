@@ -1,10 +1,10 @@
-import fs from "fs";
 import inquirer from "inquirer";
 import chalk from "chalk";
 import { taskInterface } from "../interfaces/task";
 import { getTasksFromFile } from "../helper/tasks";
 
 const getAllTasks = function () {
+  console.clear();
   const taskList: any[] = [];
 
   const allTasks: taskInterface = getTasksFromFile("tasklist.json", "utf-8");
@@ -18,10 +18,11 @@ const getAllTasks = function () {
     let task = {
       taskName: element.taskName,
       due: element.done
-        ? `is due in ${chalk.bold.blue(daysDue)} ${
+        ? `has been completed`
+        : ` due in ${chalk.bold.blue(daysDue)} ${
             daysDue === 1 ? "day" : "days"
-          }`
-        : chalk.bold.redBright(`is overdue`),
+          }`,
+          //chalk.bold.redBright(`overdue`)
     };
     taskList.push(task);
   });
@@ -42,16 +43,18 @@ const getAllTasks = function () {
     ])
     .then((answer) => {
       const task = taskList.find((element) => element.taskName === answer.task);
-      console.log(chalk(`Your task: ${task.taskName} ${task.isDue}`));
+      console.log(chalk(`Your task ${task.taskName} is ${task.due}`));
     });
 };
 
-const getDoneTasks = function () {
+const getTaskByStatus = function (boolean: boolean, message: string) {
+  console.clear();
+
   const allTasks: taskInterface = getTasksFromFile("tasklist.json", "utf-8");
-  const doneTasks = allTasks.tasks.filter((task) => task.done === true);
+  const doneTasks = allTasks.tasks.filter((task) => task.done === boolean);
 
   if (doneTasks.length < 1) {
-    console.log(chalk.italic.blue("You haven't completed any tasks."));
+    console.log(chalk.italic.blue(message));
   } else {
     const choicesArray: string[] = [];
     doneTasks.forEach((task) => {
@@ -81,16 +84,12 @@ const getDoneTasks = function () {
   }
 };
 
-const getUndoneTasks = function () {};
+const getDoneTasks = function () {
+  getTaskByStatus(true, "You haven't completed any tasks.");
+};
 
-const getDueTasks = function () {};
+const getUndoneTasks = function () {
+  getTaskByStatus(false, "You don't have any uncompleted tasks.");
+};
 
-// const dateFormatter = function (date: any) {
-//   const rtf = new Intl.RelativeTimeFormat("en", {
-//     localeMatcher: "best fit",
-//     numeric: "always",
-//     style: "long",
-//   });
-
-//   // return rtf.format()
-// };
+export { getAllTasks, getUndoneTasks, getDoneTasks };
