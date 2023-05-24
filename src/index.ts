@@ -3,6 +3,7 @@ import { program } from "commander";
 import addTodo from "./actions/addTodo";
 import { getAllTasks, getDoneTasks, getUndoneTasks } from "./actions/list";
 import { markDone } from "./actions/markDone";
+import { deleteTask } from "./actions/remove";
 
 program
   .command("add")
@@ -28,5 +29,10 @@ program
   .command("markdone")
   .description("Mark completed tasks as done")
   .action(markDone);
+
+program
+  .command("deletetask")
+  .description("Delete unwanted or finished tasks")
+  .action(deleteTask);
 
 program.parse();
